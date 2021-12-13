@@ -2,6 +2,7 @@ plugins {
     id(Pluggins.androidApplication)
     id(Pluggins.kotlinAndroid)
     id(Pluggins.kotlinAndroidExtensions)
+    id(Pluggins.mavenPublish)
 }
 
 android {
