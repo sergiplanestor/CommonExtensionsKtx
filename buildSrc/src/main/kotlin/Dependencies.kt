@@ -28,6 +28,8 @@ object Libs {
         const val appCompat = "1.4.0"
         //AndroidX
         const val ktx = "1.7.0"
+        // Material
+        const val material = "1.4.0"
     }
 
     //Kotlin
@@ -36,4 +38,6 @@ object Libs {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     //AndroidX Ktx
     const val androidxCore = "androidx.core:core-ktx:${Versions.ktx}"
+    // Material
+    const val materialDesign = "com.google.android.material:material:${Versions.material}"
 }
