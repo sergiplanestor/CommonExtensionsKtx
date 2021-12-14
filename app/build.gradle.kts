@@ -1,3 +1,5 @@
+import org.apache.commons.logging.LogFactory.release
+
 plugins {
     id(Pluggins.androidApplication)
     id(Pluggins.kotlinAndroid)
@@ -20,7 +22,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -43,4 +48,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     */
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("") {
+                groupId = "com.github.sergiplanestor"
+                artifactId = "common-ktx"
+                version = "1.0.0"
+
+                from(components["release_apk"])
+            }
+        }
+    }
 }
