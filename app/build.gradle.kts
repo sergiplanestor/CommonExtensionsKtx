@@ -1,22 +1,22 @@
 plugins {
-    id(Plugins.androidApplication)
-    id(Plugins.kotlinAndroid)
-    id(Plugins.kotlinParcelize)
-    id(Plugins.mavenPublish)
-    id("org.jetbrains.dokka") version "0.9.17"
+    id(Plugin.androidApplication)
+    id(Plugin.kotlinAndroid)
+    id(Plugin.kotlinParcelize)
+    id(Plugin.mavenPublish)
+    id(Plugin.jetbrainsDokka)
 }
 
 android {
-    compileSdk = AndroidSdk.compile
-    buildToolsVersion = AndroidSdk.buildToolsVersion
+    compileSdk = AndroidSdkConfig.compile
+    buildToolsVersion = AndroidSdkConfig.buildToolsVersion
     defaultConfig {
         applicationId = "com.revolhope.commonextensionsktx"
-        minSdk = AndroidSdk.min
-        compileSdk = AndroidSdk.compile
-        targetSdk = AndroidSdk.target
-        versionCode = Version.code
-        versionName = Version.name
-        testInstrumentationRunner = AndroidSdk.instrumentationRunner
+        minSdk = AndroidSdkConfig.min
+        compileSdk = AndroidSdkConfig.compile
+        targetSdk = AndroidSdkConfig.target
+        versionCode = BuildVersion.code
+        versionName = BuildVersion.name
+        testInstrumentationRunner = AndroidSdkConfig.instrumentationRunner
     }
     buildTypes {
         release {
@@ -38,9 +38,9 @@ android {
 
 dependencies {
 
-    implementation(Libs.appCompat)
-    implementation(Libs.androidxCore)
-    implementation(Libs.materialDesign)
+    implementation(Lib.appCompat)
+    implementation(Lib.androidxCore)
+    implementation(Lib.materialDesign)
 
     /*
     testImplementation 'junit:junit:4.13.2'
@@ -78,18 +78,20 @@ artifacts {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("debug") { applyConfig(isDebug = true) }
-            create<MavenPublication>("release") { applyConfig(isDebug = false) }
+            listOf(
+                "debug" to true,
+                "release" to false
+            ).forEach { (flavor, isDebug) -> create<MavenPublication>(flavor) { applyConfig(isDebug) } }
         }
     }
 }
 
 fun MavenPublication.applyConfig(isDebug: Boolean) {
-    from(components[if (isDebug) "debug_aab" else "release_aab"])
+    from(components[ArtifactPublicationConfig.componentName(isDebug)])
     artifact(sourcesJar)
     artifact(dokkaJar)
 
-    groupId = Artifact.group
-    artifactId = if (isDebug) Artifact.idDebug else Artifact.id
-    version = Artifact.version
+    groupId = ArtifactPublicationConfig.group
+    artifactId = ArtifactPublicationConfig.artifactId(isDebug)
+    version = ArtifactPublicationConfig.version
 }
