@@ -1,10 +1,9 @@
-import org.apache.commons.logging.LogFactory.release
-
 plugins {
-    id(Pluggins.androidApplication)
-    id(Pluggins.kotlinAndroid)
-    id(Pluggins.kotlinAndroidExtensions)
-    id(Pluggins.mavenPublish)
+    id(Plugins.androidApplication)
+    id(Plugins.kotlinAndroid)
+    id(Plugins.kotlinParcelize)
+    id(Plugins.mavenPublish)
+    id("org.jetbrains.dokka") version "0.9.17"
 }
 
 android {
@@ -50,16 +49,47 @@ dependencies {
     */
 }
 
+tasks.dokka {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/javadoc"
+    moduleName = rootProject.name
+}
+
+val dokkaJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Kotlin docs with Dokka"
+    archiveClassifier.set("javadoc")
+    from(tasks.dokka)
+    dependsOn(tasks.dokka)
+}
+
+val sourcesJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles sources JAR"
+    archiveClassifier.set("sources")
+    from(android.sourceSets.getByName("main").java.srcDirs)
+}
+
+artifacts {
+    archives(sourcesJar)
+    archives(dokkaJar)
+}
+
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("") {
-                groupId = "com.github.sergiplanestor"
-                artifactId = "common-ktx"
-                version = "1.0.0"
-
-                from(components["release_apk"])
-            }
+            create<MavenPublication>("debug") { applyConfig(isDebug = true) }
+            create<MavenPublication>("release") { applyConfig(isDebug = false) }
         }
     }
+}
+
+fun MavenPublication.applyConfig(isDebug: Boolean) {
+    from(components[if (isDebug) "debug_aab" else "release_aab"])
+    artifact(sourcesJar)
+    artifact(dokkaJar)
+
+    groupId = Artifact.group
+    artifactId = if (isDebug) Artifact.idDebug else Artifact.id
+    version = Artifact.version
 }

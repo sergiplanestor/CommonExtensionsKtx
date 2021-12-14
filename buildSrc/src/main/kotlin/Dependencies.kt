@@ -1,9 +1,9 @@
 const val kotlinVersion = "1.5.31"
 
-object Pluggins {
+object Plugins {
     const val androidApplication = "com.android.application"
     const val kotlinAndroid = "kotlin-android"
-    const val kotlinAndroidExtensions = "kotlin-android-extensions"
+    const val kotlinParcelize = "kotlin-parcelize"
     const val mavenPublish = "maven-publish"
 }
 
@@ -11,7 +11,7 @@ object AndroidSdk {
     const val min = 24
     const val compile = 31
     const val target = compile
-    const val buildToolsVersion = "29.0.2"
+    const val buildToolsVersion = "30.0.2"
     const val instrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
 
@@ -21,6 +21,13 @@ object Version {
     private const val patch = 0
     const val code = 1
     const val name = "$major.$minor.$patch"
+}
+
+object Artifact {
+    const val group = "com.github.sergiplanestor"
+    const val id = "common-ktx"
+    const val idDebug = "$id-debug"
+    const val version = Version.name
 }
 
 object Libs {
