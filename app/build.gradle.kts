@@ -49,7 +49,7 @@ dependencies {
     */
 }
 
-tasks.dokka {
+/*tasks.dokka {
     outputFormat = "html"
     outputDirectory = "$buildDir/javadoc"
     moduleName = rootProject.name
@@ -61,7 +61,7 @@ val dokkaJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.dokka)
     dependsOn(tasks.dokka)
-}
+}*/
 
 val sourcesJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
@@ -72,7 +72,7 @@ val sourcesJar by tasks.creating(Jar::class) {
 
 artifacts {
     archives(sourcesJar)
-    archives(dokkaJar)
+    //archives(dokkaJar)
 }
 
 afterEvaluate {
@@ -89,7 +89,7 @@ afterEvaluate {
 fun MavenPublication.applyConfig(isDebug: Boolean) {
     from(components[ArtifactPublicationConfig.componentName(isDebug)])
     artifact(sourcesJar)
-    artifact(dokkaJar)
+    //artifact(dokkaJar)
 
     groupId = ArtifactPublicationConfig.group
     artifactId = ArtifactPublicationConfig.artifactId(isDebug)
