@@ -45,12 +45,12 @@ dependencies {
     */
 }
 
-val samplesSourcesJar by tasks.creating(Jar::class) {
+/*val samplesSourcesJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles sources JAR"
     archiveClassifier.set("samplessources")
     from(android.sourceSets.getByName("main").java.srcDirs)
-}
+}*/
 
 val sourcesJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
@@ -61,7 +61,7 @@ val sourcesJar by tasks.creating(Jar::class) {
 
 artifacts {
     archives(sourcesJar)
-    archives(samplesSourcesJar)
+    //archives(samplesSourcesJar)
     //archives(dokkaJar)
 }
 
@@ -79,7 +79,7 @@ afterEvaluate {
 fun MavenPublication.applyConfig(isDebug: Boolean) {
     from(components[ArtifactPublicationConfig.componentName(isDebug)])
     artifact(sourcesJar)
-    artifact(samplesSourcesJar)
+    //artifact(samplesSourcesJar)
 
     groupId = ArtifactPublicationConfig.group
     artifactId = ArtifactPublicationConfig.artifactId(isDebug)
