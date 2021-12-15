@@ -1,7 +1,7 @@
-package com.revolhope.commonextensionsktx.feature.errors
+package com.revolhope.common_ktx.errors
 
-import com.revolhope.commonextensionsktx.feature.log.Logger
-import com.revolhope.commonextensionsktx.feature.log.err
+import com.revolhope.common_ktx.log.Logger
+import com.revolhope.common_ktx.log.err
 
 fun <T> runSafe(action: () -> T): Result<T> =
     runCatching { action() }.also { it.exceptionOrNull()?.run { Logger.err(error = this) } }

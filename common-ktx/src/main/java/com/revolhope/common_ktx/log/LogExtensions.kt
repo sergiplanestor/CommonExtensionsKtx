@@ -1,4 +1,4 @@
-package com.revolhope.commonextensionsktx.feature.log
+package com.revolhope.common_ktx.log
 
 fun <T : Any> T.err(message: String? = null, error: Throwable? = null) {
     log(level = LogLevel.E, message, error)

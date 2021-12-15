@@ -1,7 +1,7 @@
-package com.revolhope.commonextensionsktx.feature.log
+package com.revolhope.common_ktx.log
 
 import android.util.Log
-import com.revolhope.commonextensionsktx.BuildConfig
+import com.revolhope.common_ktx.BuildConfig
 import kotlin.random.Random
 
 object Logger {
