@@ -1,16 +1,16 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id(Plugin.androidLibrary)
+    id(Plugin.kotlinAndroid)
+    id(Plugin.kotlinParcelize)
+    id(Plugin.mavenPublish)
 }
 
 android {
-    compileSdk = 31
-
+    compileSdk = AndroidSdkConfig.compile
     defaultConfig {
-        minSdk = 24
-        targetSdk = 31
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        minSdk = AndroidSdkConfig.min
+        targetSdk = AndroidSdkConfig.target
+        testInstrumentationRunner = AndroidSdkConfig.instrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -34,10 +34,54 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation(Lib.appCompat)
+    implementation(Lib.androidxCore)
+    implementation(Lib.materialDesign)
+
+    /*
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    */
+}
+
+val samplesSourcesJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles sources JAR"
+    archiveClassifier.set("samplessources")
+    from(android.sourceSets.getByName("main").java.srcDirs)
+}
+
+val sourcesJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles sources JAR"
+    archiveClassifier.set("sources")
+    from(android.sourceSets.getByName("main").java.srcDirs)
+}
+
+artifacts {
+    archives(sourcesJar)
+    archives(samplesSourcesJar)
+    //archives(dokkaJar)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            listOf(
+                "debug" to true,
+                "release" to false
+            ).forEach { (flavor, isDebug) -> create<MavenPublication>(flavor) { applyConfig(isDebug) } }
+        }
+    }
+}
+
+fun MavenPublication.applyConfig(isDebug: Boolean) {
+    from(components[ArtifactPublicationConfig.componentName(isDebug)])
+    artifact(sourcesJar)
+    artifact(samplesSourcesJar)
+
+    groupId = ArtifactPublicationConfig.group
+    artifactId = ArtifactPublicationConfig.artifactId(isDebug)
+    version = ArtifactPublicationConfig.version
 }

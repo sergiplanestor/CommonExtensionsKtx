@@ -1,6 +1,6 @@
 object ArtifactPublicationConfig {
-    private const val componentNameDebug = "debug_aab"
-    private const val componentNameRelease = "release_aab"
+    private const val componentNameDebug = "debug"
+    private const val componentNameRelease = "release"
     const val group = "com.github.sergiplanestor"
     const val id = "common-ktx"
     const val idDebug = "$id-debug"
