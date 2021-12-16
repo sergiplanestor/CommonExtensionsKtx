@@ -49,7 +49,7 @@ val sourcesJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles sources JAR"
     archiveClassifier.set("sources")
-    from(android.sourceSets.getByName("main").java.srcDirs)
+    from(project.android.sourceSets.getByName("main").java.srcDirs)
 }
 
 artifacts { archives(sourcesJar) }
@@ -70,6 +70,6 @@ fun MavenPublication.applyConfig(isDebug: Boolean) {
     artifact(sourcesJar)
 
     groupId = ArtifactPublicationConfig.group
-    artifactId = ArtifactPublicationConfig.artifactId(isDebug)
+    artifactId = ArtifactPublicationConfig.artifactId(project.name, isDebug)
     version = ArtifactPublicationConfig.version
 }

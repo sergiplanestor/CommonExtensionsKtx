@@ -1,4 +1,4 @@
-package com.revolhope.common_ktx.log
+package com.revolhope.common_ktx.core.log
 
 import android.util.Log
 
