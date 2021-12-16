@@ -1,4 +1,4 @@
-package com.revolhope.common_ktx.domain.model
+package com.revolhope.common_domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
