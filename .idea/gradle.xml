@@ -14,7 +14,12 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/common-core" />
+            <option value="$PROJECT_DIR$/common-coroutines" />
+            <option value="$PROJECT_DIR$/common-data" />
+            <option value="$PROJECT_DIR$/common-data-firebase-auth" />
+            <option value="$PROJECT_DIR$/common-data-firebase-db" />
             <option value="$PROJECT_DIR$/common-domain" />
+            <option value="$PROJECT_DIR$/common-ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

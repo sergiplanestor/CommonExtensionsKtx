@@ -34,7 +34,9 @@ android {
 
 dependencies {
 
-    implementation(Lib.appCompat)
+    implementation(Project.CORE.project(this))
+    implementation(Project.COROUTINES.project(this))
+    implementation(Lib.androidxAppCompat)
     implementation(Lib.androidxCore)
     implementation(Lib.materialDesign)
 

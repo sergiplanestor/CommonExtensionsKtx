@@ -16,3 +16,8 @@ rootProject.name = "CommonExtensionsKtx"
 include ':app'
 include ':common-core'
 include ':common-domain'
+include ':common-data'
+include ':common-ui'
+include ':common-coroutines'
+include ':common-data-firebase-auth'
+include ':common-data-firebase-db'
